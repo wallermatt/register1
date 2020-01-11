@@ -5,6 +5,7 @@ contract Register1 {
     address public contractOwner;
     
     struct Record {
+        bool registered;
         address owner;
         uint256 timestamp;
         string description;
@@ -16,8 +17,14 @@ contract Register1 {
         contractOwner = msg.sender;
     }
     
-    function createRecord (string hash, string description) public {
+    modifier hashNotRegistered(string hash) {
+        require(records[hash].registered == false, 'Hash already registered');
+        _;
+    }
+
+    function createRecord (string hash, string description) public hashNotRegistered(hash) {
         Record memory newRecord = Record ({
+            registered: true,
             owner: msg.sender,
             timestamp: block.timestamp,
             description: description
@@ -26,9 +33,9 @@ contract Register1 {
         records[hash] = newRecord;
     }
     
-    function getRecord(string hash) public returns (address, uint256, string) {
+    function getRecord(string hash) public returns (bool, address, uint256, string) {
         Record memory result = records[hash];
-        return (result.owner, result.timestamp, result.description);
+        return (result.registered, result.owner, result.timestamp, result.description);
     }
     
      

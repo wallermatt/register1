@@ -40,9 +40,24 @@ describe('Register1', () => {
   it('can get a record', async () => {
     await register1.methods.createRecord('102', 'Test1').send({ from: accounts[0], gas: '1000000' });
     let result = await register1.methods.getRecord('102').call();
-    assert.equal(result[0], accounts[0]);
-    assert (result[1] > '1577804232');
-    assert.equal(result[2], 'Test1');
+    assert.equal(result[0], true);
+    assert.equal(result[1], accounts[0]);
+    assert (result[2] > '1577804232');
+    assert.equal(result[3], 'Test1');
+  });
+
+  it("cannot register a hash that is already registered", async () => {
+    await register1.methods.createRecord('103', 'Test already reg').send({ from: accounts[0], gas: '1000000' });
+    let result = await register1.methods.getRecord('103').call();
+    assert.equal(result[0], true);
+    
+    try {
+      await register1.methods.createRecord('103', 'Test try to reg again').send({ from: accounts[0], gas: '1000000' });
+      assert(false);
+    } catch(err) {
+      assert(err);
+    }
+
   });
   /*
   it('can change the message', async () => {
