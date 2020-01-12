@@ -4,7 +4,6 @@ contract Register1 {
     
     address public contractOwner;
     
-    /*
     struct Record {
         bool registered;
         address owner;
@@ -12,7 +11,7 @@ contract Register1 {
         string description;
     }
     
-    
+    /*
     mapping(string => Record) private records;
     
     function Register1() public {
@@ -39,7 +38,6 @@ contract Register1 {
         Record memory result = records[hash];
         return (result.registered, result.owner, result.timestamp, result.description);
     }
-    
-   */  
+    */ 
     
 }
