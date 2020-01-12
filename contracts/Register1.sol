@@ -4,12 +4,14 @@ contract Register1 {
     
     address public contractOwner;
     
+    /*
     struct Record {
         bool registered;
         address owner;
         uint256 timestamp;
         string description;
     }
+    
     
     mapping(string => Record) private records;
     
@@ -38,6 +40,6 @@ contract Register1 {
         return (result.registered, result.owner, result.timestamp, result.description);
     }
     
-     
+   */  
     
 }

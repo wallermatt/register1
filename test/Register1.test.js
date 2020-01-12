@@ -2,7 +2,7 @@ const assert = require('assert');
 const ganache = require('ganache-cli');
 const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
-const { interface, bytecode } = require('../compile');
+const compiledRegister1 = require('../build/Register1.json');
 
 let accounts;
 let register1;
@@ -13,9 +13,9 @@ beforeEach(async () => {
 
   // Use one of those accounts to deploy
   // the contract
-  register1 = await new web3.eth.Contract(JSON.parse(interface))
+  register1 = await new web3.eth.Contract(JSON.parse(compiledRegister1.interface))
     .deploy({
-      data: bytecode
+      data: compiledRegister1.bytecode
     })
     .send({ from: accounts[0], gas: '1000000' });
 });
@@ -59,11 +59,5 @@ describe('Register1', () => {
     }
 
   });
-  /*
-  it('can change the message', async () => {
-    await inbox.methods.setMessage('bye').send({ from: accounts[0] });
-    const message = await inbox.methods.message().call();
-    assert.equal(message, 'bye');
-  });
-*/
+ 
 });
